@@ -20,6 +20,9 @@ export default defineConfig({
       },
     }),
   ],
+  output: {
+    assetPrefix: '/vue2-boilerplate/',
+  },
   html: {
     title: 'vue2-boilerplate',
   },
