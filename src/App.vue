@@ -11,52 +11,66 @@
       />
     </div>
 
-    <div style="text-align: center; padding: 80px; font-size: 2rem">
-      <h1>Disable antd Form, Globally</h1>
+    <div style="text-align: center; padding: 4vh; font-size: 2rem">
+      <h1 style="font-size: 4vw">Disable antd Form, Globally</h1>
     </div>
 
-    <div class="form-view-card">
-      <a-layout>
-        <a-layout-header>
-          <header class="header">
-            <div class="logo" style="flex: 1">
-              <img
-                src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-                alt="antd logo"
-              />
-            </div>
-            <a-space>
-              <a-button type="link" icon="bell" style="color: black" />
-              <a-avatar icon="user" />
-            </a-space>
-          </header>
-        </a-layout-header>
+    <section class="block">
+      <div class="form-view-card">
         <a-layout>
-          <a-layout-sider theme="light">
-            <a-menu
-              theme="light"
-              mode="inline"
-              :default-selected-keys="['enable']"
-              @select="onSelect"
-            >
-              <a-menu-item key="enable">
-                <a-icon type="edit" />
-                <span>Enable</span>
-              </a-menu-item>
-              <a-menu-item key="disable">
-                <a-icon type="profile" />
-                <span>Disable</span>
-              </a-menu-item>
-            </a-menu>
-          </a-layout-sider>
+          <a-layout-header>
+            <header class="header">
+              <div class="header-left">
+                <div class="logo" style="flex: 1">
+                  <img
+                    src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+                    alt="antd logo"
+                  />
+                </div>
+                <a-menu
+                  class="header-menu"
+                  theme="light"
+                  mode="horizontal"
+                  v-model="selectedKeys"
+                >
+                  <a-menu-item key="enable">
+                    <a-icon type="edit" />
+                    <span>Enable</span>
+                  </a-menu-item>
+                  <a-menu-item key="disable">
+                    <a-icon type="profile" />
+                    <span>Disable</span>
+                  </a-menu-item>
+                </a-menu>
+              </div>
+              <a-space>
+                <a-button type="link" icon="bell" style="color: black" />
+                <a-avatar icon="user" />
+              </a-space>
+            </header>
+          </a-layout-header>
           <a-layout>
-            <a-layout-content>
-              <FormView class="form-view" />
-            </a-layout-content>
+            <a-layout-sider theme="light" class="sider">
+              <a-menu theme="light" mode="inline" v-model="selectedKeys">
+                <a-menu-item key="enable">
+                  <a-icon type="edit" />
+                  <span>Enable</span>
+                </a-menu-item>
+                <a-menu-item key="disable">
+                  <a-icon type="profile" />
+                  <span>Disable</span>
+                </a-menu-item>
+              </a-menu>
+            </a-layout-sider>
+            <a-layout>
+              <a-layout-content>
+                <FormView class="form-view" />
+              </a-layout-content>
+            </a-layout>
           </a-layout>
         </a-layout>
-      </a-layout>
-    </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -76,16 +90,12 @@ export default {
   },
   data() {
     return {
-      disabled: false,
+      selectedKeys: ['enable'],
     };
   },
-  methods: {
-    onSelect(menu) {
-      if (menu.key === 'enable') {
-        this.disabled = false;
-      } else {
-        this.disabled = true;
-      }
+  computed: {
+    disabled() {
+      return this.selectedKeys.includes('disable');
     },
   },
 };
@@ -127,6 +137,13 @@ export default {
     background: transparent;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .ant-layout-sider {
+    display: none;
+  }
+}
+
 .ant-layout-header {
   height: 48px;
   line-height: 1;
@@ -141,19 +158,24 @@ export default {
   height: 100%;
 }
 
+.ant-form-item label {
+  line-height: 40px;
+}
+
+section.block {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
+
 .form-view-card {
   overflow: hidden auto;
   background: rgba(240, 242, 245, 0.25);
   backdrop-filter: blur(50px);
   box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  position: fixed;
-  left: 50%;
-  bottom: 100px;
-  top: 300px;
   width: calc(100% - 48px);
   max-width: 1080px;
-  transform: translate3d(-50%, 0, 0);
 
   .header {
     display: flex;
@@ -162,15 +184,29 @@ export default {
     align-items: center;
     height: 100%;
 
+    .header-left {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      gap: 12px;
+    }
+
     .logo > img {
       width: 30px;
       height: 30px;
+    }
+
+    @media screen and (min-width: 768px) {
+      .header-menu {
+        display: none;
+      }
     }
   }
 
   .form-view {
     border-radius: 12px;
     background: white;
+    padding: 12px;
   }
 }
 </style>
