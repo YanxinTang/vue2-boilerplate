@@ -6,7 +6,7 @@ describe('Control', () => {
   test('provide.disable is primitive', () => {
     const wrapper = mount(Control, {
       propsData: {
-        tag: 'AButton',
+        component: 'AButton',
       },
       provide: {
         disabled: true,
@@ -20,7 +20,7 @@ describe('Control', () => {
   test('provide.disable is computed', () => {
     const wrapper = mount(Control, {
       propsData: {
-        tag: 'AButton',
+        component: 'AButton',
       },
       provide: {
         disabled: computed(() => true),

@@ -11,7 +11,7 @@ function getInjectionsDisabled(ctx) {
 export default defineComponent({
   functional: true,
   props: {
-    tag: {
+    component: {
       type: String,
       required: true,
     },
@@ -23,7 +23,7 @@ export default defineComponent({
   },
   render(h, ctx) {
     const { props } = ctx;
-    const { tag: Tag } = props;
+    const { component: Component } = props;
     const {
       'data-__field': dataField,
       'data-__meta': dataMeta,
@@ -38,9 +38,9 @@ export default defineComponent({
     };
 
     return (
-      <Tag attrs={attrs} on={ctx.data.on} scopedSlots={ctx.scopedSlots}>
+      <Component attrs={attrs} on={ctx.data.on} scopedSlots={ctx.scopedSlots}>
         {ctx.scopedSlots.default?.()}
-      </Tag>
+      </Component>
     );
   },
 });

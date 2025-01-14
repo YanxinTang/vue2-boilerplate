@@ -1,21 +1,21 @@
 <script lang="tsx">
 import { defineComponent } from 'vue';
 import Target from 'ant-design-vue/es/radio/Radio';
-import Control from '../Control';
-import { compModelProp } from '@/utils';
+import MControl from '../MControl';
+import { vModelProp } from '@/utils';
 
 export default defineComponent({
   name: Target.name.replace('A', 'M'),
   props: {
-    [compModelProp(Target)]: Target.props[compModelProp(Target)],
+    [vModelProp(Target)]: Target.props[vModelProp(Target)],
   },
   inheritAttrs: false,
   render() {
     return (
-      <Control
-        tag={Target.name}
+      <MControl
+        component={Target.name}
         on={this.$listeners}
-        attrs={this.$attrs}
+        attrs={{ ...this.$props, ...this.$attrs }}
         scopedSlots={this.$scopedSlots}
       />
     );
